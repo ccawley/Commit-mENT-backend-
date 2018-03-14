@@ -1,4 +1,4 @@
 module.exports = {
-  UsersModel: require('./users.model'),
+  User: require('./users.model'),
   Token: require('./token.model')
 }

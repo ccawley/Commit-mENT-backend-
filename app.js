@@ -4,14 +4,16 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 3000
+require('dotenv').config()
+
 
 app.use(cors())
 app.disable('x-powered-by')
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
-const { UsersRoutes } = require('./src/routes')
-app.use('/users', UsersRoutes)
+const { UsersRouter } = require('./routes')
+app.use('/users', UsersRouter)
 
 app.use((err, req, res, next) => {
   const status = err.status || 500

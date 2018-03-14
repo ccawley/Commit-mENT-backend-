@@ -6,14 +6,14 @@ const { SECRET_KEY } = process.env
 
 class Token {
   // Both of these Token methods are async and return a PROMISE
-  static sign(id) {
-    let payload = {
-          loggedIn: true,
-          sub: { id },
-          exp: parseInt(Date.now() + 100000, 10)
-        }
-    return signPromise(payload, SECRET_KEY)
-  }
+  // static sign(id) {
+  //   let payload = {
+  //         loggedIn: true,
+  //         sub: { id },
+  //         exp: parseInt(Date.now() + 100000, 10)
+  //       }
+  //   return signPromise(payload, SECRET_KEY)
+  // }
 
   // below function not connected to any route at the moment...
   // static verifyAndExtractHeaderToken(header) {
