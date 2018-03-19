@@ -14,7 +14,7 @@ class Token {
   //       }
   //   return signPromise(payload, SECRET_KEY)
   // }
-
+  //
   // below function not connected to any route at the moment...
   // static verifyAndExtractHeaderToken(header) {
   //   const token = header.authorization ? header.authorization.replace('Bearer ', '') : null
