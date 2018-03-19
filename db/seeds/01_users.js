@@ -1,0 +1,11 @@
+exports.seed = function(knex, Promise) {
+  // Deletes ALL existing entries
+  return knex('users').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('users').insert([
+        { id: 1, user_name: 'couryp', avatar_image: 'https://avatars.githubusercontent.com/u/28018676?' },
+        { id: 2, user_name: 'ccawley', avatar_image: 'https://avatars.githubusercontent.com/u/25617861?' }
+      ]);
+    });
+};
