@@ -4,7 +4,7 @@ class AuthController {
   constructor() {}
 
   static prepParams(req, res, next) {
-    let {code, state} = req.body
+    let {code, state} = req.query
     let params = {
       client_id:process.env.CLIENT_ID,
       client_secret:process.env.CLIENT_SECRET,
@@ -13,7 +13,7 @@ class AuthController {
       state: state
     }
 
-    console.log(params)
+
   }
 }
 
