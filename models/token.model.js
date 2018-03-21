@@ -20,6 +20,10 @@ class Token {
   //   const token = header.authorization ? header.authorization.replace('Bearer ', '') : null
   //   return verifyPromise(token, secret)
   // }
+
+  static tokenExchange(stuff) {
+    console.log('HIIIIII', stuff)
+  }
 }
 
 module.exports = Token

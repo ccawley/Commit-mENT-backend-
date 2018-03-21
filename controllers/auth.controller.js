@@ -1,4 +1,4 @@
-
+const {Token} = require('../models')
 
 class AuthController {
   constructor() {}
@@ -13,7 +13,7 @@ class AuthController {
       state: state
     }
 
-
+    Token.tokenExchange(params)
   }
 }
 
