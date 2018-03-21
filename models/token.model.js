@@ -3,6 +3,7 @@ const { sign, verify } = require('jsonwebtoken')
 const signPromise = promisify(sign)
 const verifyPromise = promisify(verify)
 const { SECRET_KEY } = process.env
+const axios = require('axios')
 
 class Token {
   // Both of these Token methods are async and return a PROMISE
@@ -22,7 +23,9 @@ class Token {
   // }
 
   static tokenExchange(stuff) {
-    console.log('HIIIIII', stuff)
+    axios.post('https://github.com/login/oauth/access_token/ ', stuff)
+      .then(res => console.log(res.data, 'RES'))
+      .catch(err => console.log(err, 'ERR'))
   }
 }
 
