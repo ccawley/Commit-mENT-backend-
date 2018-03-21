@@ -14,6 +14,7 @@ class AuthController {
     }
 
     Token.tokenExchange(params)
+      .then(data => res.status(200).json(data))
   }
 }
 

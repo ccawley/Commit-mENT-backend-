@@ -23,9 +23,14 @@ class Token {
   // }
 
   static tokenExchange(stuff) {
-    axios.post('https://github.com/login/oauth/access_token/ ', stuff)
-      .then(res => console.log(res.data, 'RES'))
-      .catch(err => console.log(err, 'ERR'))
+    return axios.post('https://github.com/login/oauth/access_token/ ', stuff)
+      .then(res => {
+        let arr1 = res.data.split('&')
+        let token = arr1[0].split('=')[1]
+        let scope = arr1[1].split('=')[1]
+        return {access_token: token, scope: scope}
+      })
+      .catch(err => err)
   }
 }
 
