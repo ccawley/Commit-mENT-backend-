@@ -9,7 +9,7 @@ class AuthController {
       client_id:process.env.CLIENT_ID,
       client_secret:process.env.CLIENT_SECRET,
       code: code,
-      redirect_uri: 'http://commit-m-test.surge.sh',
+      redirect_uri: 'http://commit-m.surge.sh',
       state: state
     }
 
