@@ -14,9 +14,9 @@ class AuthController {
       redirect_uri: 'http://commit-m.surge.sh',
       state: state
     }
-    res.status(200).json({message: 'hey team!'})
-    // Token.tokenExchange(params)
-    //   .then(data => res.status(200).json(data))
+    // res.status(200).json({message: 'hey team!'})
+    Token.tokenExchange(params)
+      .then(data => res.status(200).json(data))
   }
 }
 
