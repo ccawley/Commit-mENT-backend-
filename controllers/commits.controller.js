@@ -4,16 +4,34 @@ class CommitsController {
   constructor() {}
 
   static index (req, res, next) {
-    console.log('ctrl')
     Commit.index()
       .then(commits => {
-        console.log(commits)
         return res.json({ commits })
       })
       .catch(err => {
         console.log('Error!', err)
       })
   }
+
+  static userCommits (req, res, next) {
+    Commit.userCommits(req.params.username)
+      .then(commits => {
+        return res.json({ commits })
+      })
+      .catch(err => {
+        console.log('Error!', err);
+      })
+  }
+
+  // static create (req, res, next) {
+  //   Commit.create()
+  //     .then(commits => {
+  //       return res.json({ commits })
+  //     })
+  //     .catch(err => {
+  //       console.log('Error!', err);
+  //     })
+  // }
 
 }
 
