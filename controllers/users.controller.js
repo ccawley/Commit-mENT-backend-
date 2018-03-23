@@ -14,6 +14,12 @@ class UsersController {
       })
   }
 
+  static createUser (req, res, next) {
+    User.create(req.body)
+      .then(user => res.status(200))
+      .catch(err => console.log('Error!', err))
+  }
+
 }
 
 
