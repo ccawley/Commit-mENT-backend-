@@ -12,9 +12,10 @@ app.disable('x-powered-by')
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
-const { UsersRouter, AuthRouter } = require('./routes')
+const { UsersRouter, AuthRouter, CommitsRouter } = require('./routes')
 app.use('/users', UsersRouter)
 app.use('/auth', AuthRouter)
+app.use('/commits', CommitsRouter)
 
 app.use((err, req, res, next) => {
   const status = err.status || 500
