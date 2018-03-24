@@ -20,7 +20,6 @@ class User {
   }
 
   static getUser(username) {
-    console.log('Hey, BRO!')
     return knex('users')
       .where({ user_name: username})
       .first()
@@ -28,7 +27,6 @@ class User {
   }
 
   static createUser(newUser) {
-    console.log('You hit me, BRO')
     return knex('users')
       .insert(newUser)
       .then(() => {
