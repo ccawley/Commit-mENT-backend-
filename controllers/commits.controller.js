@@ -25,49 +25,59 @@ class CommitsController {
       })
   }
 
+
   static create (req, res, next) {
-    // axios call hell begins here...
-    //gets all repos for a specific user as an array
-        // loop over array and hunt for 'full_name' (that's the username and reponame)
-
-    // https://api.github.com/repos/just-hey/g-snacks-client/commits
-    //gets all commits for a specific repo as an array
-    console.log("here bitches");
-    console.log(req.body.username);
-    axios.get(`https://api.github.com/users/${req.body.username}/repos`)
-      .then(result => {
-        let githubInfo = result.data.map(repo => {
-          return repo.full_name
+    console.log("Controller: You've got this far, BRO!")
+    let token = req.body.token
+    let header = {Authorization: `token ${token}`}
+    axios.get(`https://api.github.com/user/repos?affiliation=owner`, { headers : header })
+      .then(result => result.data.map(repo => repo.full_name))
+      .then(bfa => {
+        let promises = bfa.map(e => {
+          return axios.get(`https://api.github.com/repos/${e}/commits`, { headers : header })
+            .then(result => {
+              return result.data.map(commit => {
+                let commiter = commit.commit.committer.name
+                let date = commit.commit.committer.date
+                let message = commit.commit.message
+                return {date, commiter, message}
+              })
+            })
+            .catch(err => console.log(err, "More ERR here, BRO!"))
         })
-        return githubInfo
-      })
-      .then(githubInfo => {
-        let promises = githubInfo.map(repo => axios.get(`https://api.github.com/repos/${repo}/commits`))
-        return Promise.all(promises)
-        .then(data => {
-          console.log('here?',data)
-          return data
-        })
-      })
-        // console.log(githubInfo);
-        // Promise.all(githubInfo.map(repo => {
-        //   return axios.get(`https://api.github.com/repos/${repo}/commits`)
-        // }))
-        //   .then(result => {
-        //     console.log('Hi', result);
-        //   })
+        Promise.all(promises)
+          .then(data => {
+            //bfa OF arrays of objects.  We need to now filter this data because it has ALL commiters for each repo not just our user. we can do this by filtering by the "commiter" which we will have to save a reference to our users "commiter" name.
+                  // (ex:
+                  //     Anh     ===   "commiter":"Anh Trieu"
+                  //     Curtis  ===   "commiter":"Curtis Cawley"
+                  //     Mine    ===   "commiter":"Justin Hays"
+                  //     Rebecca ===   "commiter":"RJ"
+                  // )
+            //it's clearly something we can have access to at some point when the person's account is created so we can pull it in from there then go about passing it around the same way we do for usernames and tokens?
 
-      .catch(err => console.log(err))
-
-
-    // Commit.create()
-    //   .then(commits => {
-    //     return res.json({ commits })
-    //   })
-    //   .catch(err => {
-    //     console.log('Error!', err);
-    //   })
+            res.status(200).json(data)       //<<<<<< this will change/be moved some time
+            //return Commit.create(data)      //<<<<<< we want to end up using this line!!!
+          })
+          // .then(commits => {
+          //   res.json({ commits })
+          // })
+      }) // bfa = BIG FUCKING ARRAY
+      .catch(err => console.log(err, "You've Got ERR, BRO!"))
   }
+
+
+
+
+  //
+  //   // Commit.create()
+  //   //   .then(commits => {
+  //   //     return res.json({ commits })
+  //   //   })
+  //   //   .catch(err => {
+  //   //     console.log('Error!', err);
+  //   //   })
+  // }
 
 }
 
