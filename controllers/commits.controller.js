@@ -41,15 +41,27 @@ class CommitsController {
         return githubInfo
       })
       .then(githubInfo => {
+        return axios.get(`https://api.github.com/repos/${githubInfo[0]}/commits`)
         // console.log(githubInfo);
-        let commitsArray = githubInfo.map(repo => {
-          return axios.get(`https://api.github.com/repos/${repo}/commits`)
-            .then(result => {
-              console.log(result.data);
-              return result
-            })
-        })
+        // Promise.all(githubInfo.map(repo => {
+        //   return axios.get(`https://api.github.com/repos/${repo}/commits`)
+        // }))
+        //   .then(result => {
+        //     console.log('Hi', result);
+        //   })
       })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
+      // .then(promises => {
+      //   return Promise.all(promises).then(result => {
+      //     console.log('Hi', result);
+      //   })
+      // })
+      // .then(result => {
+      //   // console.log(result);
+      // })
     // Commit.create()
     //   .then(commits => {
     //     return res.json({ commits })
@@ -63,3 +75,22 @@ class CommitsController {
 
 
 module.exports = CommitsController
+
+// console.log('womp')
+// let commitsArray = githubInfo.map(repo => {
+//   console.log('spam?', repo)
+//   return axios.get(`https://api.github.com/repos/${repo}/commits`)
+//     .then(result => {
+//       console.log('here!',typeof result.data)
+//       let arrayOfObjs = result.data.map(result => {
+//         let returningObj = {
+//           createdAt: commit.committer.date,
+//           message: commit.committer.message
+//         }
+//         // console.log('halp',returningObj)
+//         return returningObj
+//       })
+//       return arrayOfObjs
+//     })
+// })
+// return commitsArray
