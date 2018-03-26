@@ -23,8 +23,32 @@ class Commit {
       })
   }
 
-  static create () {
-    
+  static createCommits (data) {
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        // console.log(data[i][j]);
+        return knex('users')
+          .where({ user_name: data[i][j].commiter })
+          .first()
+          .then(match => {
+            if (match) {
+              return knex('commits')
+                .whereNot('sha', data[i][j].sha)
+                .then(() => {
+                  console.log("we in here");
+                  return knex('commits')
+                    .insert({
+                      user_id: match.id,
+                      message: data[i][j].message,
+                      createdAt: data[i][j].date,
+                      sha: data[i][j].sha
+                    })
+                    .then()
+                })
+            }
+        })
+      }
+    }
   }
 
 }
