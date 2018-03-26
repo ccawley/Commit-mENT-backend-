@@ -23,6 +23,10 @@ class Commit {
       })
   }
 
+  static create () {
+    
+  }
+
 }
 
 module.exports = Commit
