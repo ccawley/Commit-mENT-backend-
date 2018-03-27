@@ -22,7 +22,6 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-app.configure(function () {
   app.use(allowCrossDomain);
   app.use(app.router);
   app.use(express.static(path.join(application_root, "public")));
@@ -31,7 +30,6 @@ app.configure(function () {
   app.disable('x-powered-by')
   app.use(morgan('dev'))
   app.use(bodyParser.json())
-});
 
 app.all('*', function(req, res, next) {
      var origin = req.get('origin');
