@@ -1,6 +1,5 @@
 const db = require('../db/knex.js')
 const knex = require('../db/knex')
-const bcrypt = require('bcrypt')
 const axios = require('axios')
 
 
