@@ -23,7 +23,7 @@ class Token {
   // }
 
   static tokenExchange(stuff) {
-    console.log('this is where we are?',stuff);
+    console.log('this is where we are?', stuff);
     return axios.post('https://github.com/login/oauth/access_token/ ', stuff)
       .then(res => {
         let arr1 = res.data.split('&')

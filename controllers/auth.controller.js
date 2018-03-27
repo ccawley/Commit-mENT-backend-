@@ -12,6 +12,7 @@ class AuthController {
       redirect_uri: 'http://commit-m.surge.sh',
       state: state
     }
+    console.log('This is BODY', params)
     Token.tokenExchange(params)
       .then(data => {
         console.log('ctrl data is actually....',data);
