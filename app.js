@@ -12,6 +12,14 @@ app.disable('x-powered-by')
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
+app.all('*', function(req, res, next) {
+     var origin = req.get('origin');
+     res.header('Access-Control-Allow-Origin', origin);
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header('Access-Control-Allow-Headers', 'Content-Type');
+     next();
+})
+
 const { UsersRouter, AuthRouter, CommitsRouter } = require('./routes')
 app.use('/users', UsersRouter)
 app.use('/auth', AuthRouter)
