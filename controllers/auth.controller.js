@@ -18,7 +18,7 @@ class AuthController {
         console.log('ctrl data is actually.....',data);
         res.status(200).send(data)
       })
-      .catch(err => console.log(err))
+      .catch(err)
   }
 }
 
