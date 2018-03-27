@@ -23,6 +23,7 @@ class Token {
   // }
 
   static tokenExchange(stuff) {
+    console.log('this is where we are?',stuff);
     return axios.post('https://github.com/login/oauth/access_token/ ', stuff)
       .then(res => {
         let arr1 = res.data.split('&')
@@ -30,7 +31,7 @@ class Token {
         let scope = arr1[1].split('=')[1]
         return {access_token: token, scope: scope}
       })
-      .catch(err => err)
+      .catch(err => console.log(err))
   }
 }
 

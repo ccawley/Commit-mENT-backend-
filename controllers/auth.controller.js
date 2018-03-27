@@ -13,7 +13,8 @@ class AuthController {
       state: state
     }
     Token.tokenExchange(params)
-      .then(data => res.status(200).json(data))
+      .then(data => res.status(200).send(data))
+      .catch(err => console.log(err))
   }
 }
 
