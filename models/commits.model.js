@@ -61,7 +61,7 @@ class Commit {
           e.user_id = match.id
           rePackaged.push({
             user_id: e.user_id,
-            createdAt: e.createdAt,
+            created_on: e.createdAt,
             sha: e.sha,
             message: e.message})
         })
