@@ -1,7 +1,5 @@
 const db = require('../db/knex.js')
 const knex = require('../db/knex')
-const bcrypt = require('bcrypt')
-
 
 class Commit {
   constructor() {}
@@ -98,7 +96,6 @@ class Commit {
         // }).catch(console.error)
       // }
     // }
-  }
 
 }
 

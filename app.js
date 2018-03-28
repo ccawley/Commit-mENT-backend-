@@ -6,7 +6,6 @@ const bodyParser = require('body-parser')
 const port = process.env.PORT || 3000
 require('dotenv').config()
 
-
 app.use(cors())
 app.disable('x-powered-by')
 app.use(morgan('dev'))
