@@ -15,6 +15,15 @@ class Like {
       .where({ id })
   }
 
+  static leaders () {
+    return knex('users_likes')
+      .join('commits', 'users_likes.commit_id', 'commits.id')
+      // .groupBy('commits.id')
+      //this is not done!!!
+      
+      .count()
+  }
+
   static addOrRemoveLike (newLike) {
     // make query for this exact match
     return knex('users_likes')

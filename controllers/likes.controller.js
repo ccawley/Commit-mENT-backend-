@@ -19,6 +19,14 @@ class LikesController {
       .catch(console.error)
   }
 
+  static leaders (req, res, next) {
+    Like.leaders()
+      .then(likes => {
+        return res.status(200).send(likes)
+      })
+      .catch(console.error)
+  }
+
   static addOrRemoveLike (req, res, next) {
     Like.addOrRemoveLike(req.body)
       .then(like => {
