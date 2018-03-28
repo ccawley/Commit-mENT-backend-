@@ -11,10 +11,11 @@ app.disable('x-powered-by')
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 
-const { UsersRouter, AuthRouter, CommitsRouter } = require('./routes')
+const { UsersRouter, AuthRouter, CommitsRouter, LikesRouter } = require('./routes')
 app.use('/users', UsersRouter)
 app.use('/auth', AuthRouter)
 app.use('/commits', CommitsRouter)
+app.use('/likes', LikesRouter)
 
 app.use((err, req, res, next) => {
   const status = err.status || 500
