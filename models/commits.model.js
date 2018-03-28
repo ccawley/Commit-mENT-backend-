@@ -33,6 +33,19 @@ class Commit {
     return array
   }
 
+  // static checkDuplicateCommits (arrayOfObjs) {
+  //   let newArray = []
+  //   arrayOfObjs.forEach(commit => {
+  //     return knex('commits')
+  //       .then(result => {
+  //         result.filter(e => commit.sha !== e.sha).forEach(el => {
+  //           newArray.push(el)
+  //         })
+  //       })
+  //   })
+  //   console.log(newArray);
+  // }
+
   static async createCommits (data) {
     // console.log(data);
     // let array = []
@@ -52,17 +65,30 @@ class Commit {
             sha: e.sha,
             message: e.message})
         })
-        console.log('HEYYYYYYYYY',rePackaged[rePackaged.length - 1], 'OVER HERE')
-        for (let i = 0; i < rePackaged.length; i++) {
-          return knex('commits')
-            .insert(rePackaged[i])
-            .then(([data]) => {
-              return data
+        rePackaged.forEach(obj => {
+          return knex('commits').insert(obj)
+            .then(data => {
+              console.log(data);
+              // return data
             })
             .catch(console.error)
-        }
+        })
+        // Promise.all(arrayOfProms)
+        //   .then(data => {
+        //     console.log(data);
+        //     return data
+        //   })
+        //   .catch(console.error)
+        // console.log('HEYYYYYYYYY',rePackaged[rePackaged.length - 1], 'OVER HERE')
+        // for (let i = 0; i < rePackaged.length; i++) {
+        //   return knex('commits')
+        //     .insert(rePackaged[i])
+        //     .then()
+        //     .catch(console.error)
+        // }
       })
       .catch(console.error)
+    }
         // this.checkIfUser(data[i][j].committer)
         // // console.log(data[i][j]);
         // // return knex('users')
