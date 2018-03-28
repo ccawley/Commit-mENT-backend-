@@ -18,5 +18,9 @@ exports.seed = function(knex, Promise) {
         { id: 12, user_id: 2, message: 'all tests passing', createdAt: '2018-01-17T17:34:08Z'},
         { id: 13, user_id: 2, message: 'wicked gnarly bug slaying', createdAt: '2018-01-16T17:34:08Z'}
       ]);
-    });
+    }).then(() => {
+      return knex.raw(
+        `SELECT setval('commits_id_seq', (SELECT MAX(id) FROM commits));`
+      );
+    })
 };

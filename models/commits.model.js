@@ -21,9 +21,81 @@ class Commit {
       })
   }
 
-  static create () {
-
+  static arrayDestroyer (data) {
+    let array = []
+    for (let i = 0; i < data.length; i++) {
+      if(Array.isArray(data[i])){
+        for (let j = 0; j < data[i].length; j++) {
+          array.push(data[i][j])
+        }
+      }
+    }
+    return array
   }
+
+  static async createCommits (data) {
+    // console.log(data);
+    // let array = []
+    // for (let i = 0; i < data.length; i++) {
+    //   for (let j = 0; j < data[i].length; j++) {
+    let flattenedData = await this.arrayDestroyer(data)
+    return knex('users')
+      .where({ user_name: flattenedData[0].user_name })
+      .first()
+      .then(match => {
+        let rePackaged = []
+        flattenedData.forEach(e => {
+          e.user_id = match.id
+          rePackaged.push({
+            user_id: e.user_id,
+            createdAt: e.createdAt,
+            sha: e.sha,
+            message: e.message})
+        })
+        console.log('HEYYYYYYYYY',rePackaged, 'OVER HERE')
+        return knex('commits')
+          .insert(rePackaged)
+          .then(([data]) => {
+            return data
+          })
+          .catch(console.error)
+      })
+      .catch(console.error)
+        // this.checkIfUser(data[i][j].committer)
+        // // console.log(data[i][j]);
+        // // return knex('users')
+        // //   .where({ user_name: data[i][j].committer })
+        // //   .first()
+        //   .then(match => {
+        //     console.log('plz', match);
+        //     // If committers name exists in DB proceed...
+        //     if (match) {
+        //       return knex('commits') // Grabbing all commits from commit table.
+        //         .where({sha: data[i][j].sha})
+        //         .first()
+        //         //if any commit has the same as incoming commit.sha, dont add.
+        //         //else! add the incoming commit
+        //         // .whereNot('sha', data[i][j].sha) // Where sha != sha entered.
+        //         .then(found => {
+        //           console.log("i am different", found)
+        //           if (!found) {
+        //             return knex('commits')
+        //             .insert({ // If this far, we have a new commit to add to db.
+        //               user_id: match.id,
+        //               message: data[i][j].message,
+        //               createdAt: data[i][j].date,
+        //               sha: data[i][j].sha
+        //             })
+        //           } else {
+        //             return null
+        //           }
+        //
+        //             // .then()
+        //         }).catch(console.error)
+        //     }
+        // }).catch(console.error)
+      // }
+    // }
 
 }
 
