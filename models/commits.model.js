@@ -54,13 +54,15 @@ class Commit {
             sha: e.sha,
             message: e.message})
         })
-        console.log('HEYYYYYYYYY',rePackaged, 'OVER HERE')
-        return knex('commits')
-          .insert(rePackaged)
-          .then(([data]) => {
-            return data
-          })
-          .catch(console.error)
+        console.log('HEYYYYYYYYY',rePackaged[rePackaged.length - 1], 'OVER HERE')
+        for (let i = 0; i < rePackaged.length; i++) {
+          return knex('commits')
+            .insert(rePackaged[i])
+            .then(([data]) => {
+              return data
+            })
+            .catch(console.error)
+        }
       })
       .catch(console.error)
         // this.checkIfUser(data[i][j].committer)
