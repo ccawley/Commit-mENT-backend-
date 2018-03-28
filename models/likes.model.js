@@ -7,8 +7,7 @@ class Like {
   constructor() {}
 
   static index() {
-    console.log('model');
-    return likes
+    return knex('users_likes')
   }
 
 }

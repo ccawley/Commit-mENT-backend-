@@ -4,15 +4,11 @@ class LikesController {
   constructor() {}
 
   static index (req, res, next) {
-    console.log('ctrl');
     Like.index()
       .then(likes => {
-        console.log(likes)
-        return res.json({ likes })
+        return res.status(200).send({ likes })
       })
-      .catch(err => {
-        console.log('Error!', err)
-      })
+      .catch(console.error)
   }
 
 }
