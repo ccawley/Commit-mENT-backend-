@@ -15,7 +15,7 @@ class AuthController {
     console.log('This is BODY', params)
     Token.tokenExchange(params)
       .then(data => {
-        console.log(data, "<<<<<<<<<<<< Hey DATA IS HERE")
+        // console.log(data, "<<<<<<<<<<<< Hey DATA IS HERE")
         res.status(200).send(data)
       })
       .catch(err => console.log(err))
