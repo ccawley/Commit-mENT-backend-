@@ -7,7 +7,19 @@ class Commit {
   static index () {
     console.log('model')
     // should return all commits from every user!
-    return knex('commits')
+
+    return knex('users')
+      .then(users => {
+        users.forEach(user => {
+          return knex('users')
+            .join('commits')
+            .where('users_id', 'users.id')
+            .andWhere('users.id', user.id)
+            .select('full_name', 'user_name', 'avatar_image', 'created_on', 'message')
+            .then(result => console.log(result))
+        })
+      })
+
   }
 
   //take in username, get OUR user_id from 'users' table, use that id to get all commits with that ID
