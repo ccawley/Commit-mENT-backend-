@@ -10,6 +10,11 @@ class Like {
     return knex('users_likes')
   }
 
+  static getOne (id) {
+    return knex('users_likes')
+      .where({ id })
+  }
+
   static addOrRemoveLike (newLike) {
     // make query for this exact match
     return knex('users_likes')
@@ -30,7 +35,7 @@ class Like {
       //THEN! return the count of all likes with matching commit_id
       .then(() => {
         return knex('users_likes')
-          .where({commit_id: newLike.commit_id})
+          .where({ commit_id: newLike.commit_id })
           .count()
       })
       .catch(console.error)

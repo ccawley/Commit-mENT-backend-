@@ -4,7 +4,7 @@ const { LikesController } = require('../controllers')
 
 
 router.get('/', LikesController.index)
-// router.get('/:id', LikesController.getOne)
+router.get('/:id', LikesController.getOne)
 router.post('/', LikesController.addOrRemoveLike)
 
 
