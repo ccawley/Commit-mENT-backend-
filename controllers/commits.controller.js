@@ -32,21 +32,38 @@ class CommitsController {
       axios.get(`https://api.github.com/user/repos?affiliation=owner`, { headers : header })
         .then(result => result.data.map(repo => repo.full_name))
         .then(bfa => {
+          let username = bfa[0].split('/')[0]
           let promises = bfa.map(e => {
             return axios.get(`https://api.github.com/repos/${e}/commits`, { headers : header })
               .then(result => {
-                return result.data.map(commit => {
-                  let commiter = commit.commit.committer.name
-                  let date = commit.commit.committer.date
+                let filteredData = []
+                // result.data.forEach(e => {
+                //   console.log(e.author.login)
+                //   if (e.author.login == username) filteredData.push(e)
+                // })
+                for (var i = 0; i < result.data.length; i++) {
+                  console.log(result.data[i].author.login)
+                  if (result.data[i].author.login !== username) console.log('oh well');
+                  else filteredData.push(result.data[i])
+                }
+                // result.data.filter(commit => commit.author.login === username)
+                // console.log(filteredData);
+                return filteredData.map(commit => {
+                  let user_name = commit.author.login
+                  let createdAt = commit.commit.committer.date
                   let message = commit.commit.message
                   let sha = commit.sha
-                  return {date, commiter, message, sha}
+                  return {createdAt, message, user_name,sha}
                 })
               })
               .catch(err => console.log(err, "More ERR here, BRO!"))
           })
           Promise.all(promises)
-            .then(data => Commit.createCommits(data))
+            .then(data => {
+              // console.log('oh em geeeeee');
+              Commit.createCommits(data)
+              .then(commits => { res.status(200).send(commits) })
+            })
             .catch()
         }) // bfa = BIG FUCKING ARRAY
         .catch(err => console.log(err, "You've Got ERR, BRO!"))
