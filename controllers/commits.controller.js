@@ -26,7 +26,7 @@ class CommitsController {
   }
 
   static create (req, res, next) {
-      console.log("Controller: You've got this far, BRO!")
+      // console.log("Controller: You've got this far, BRO!")
       let token = req.body.token
       let header = {Authorization: `token ${token}`}
       axios.get(`https://api.github.com/user/repos?affiliation=owner`, { headers : header })
@@ -43,9 +43,12 @@ class CommitsController {
                 // })
                 for (var i = 0; i < result.data.length; i++) {
                   console.log(result.data[i].author.login)
-                  if (result.data[i].author.login !== username) console.log('oh well');
-                  else filteredData.push(result.data[i])
+                  if (result.data[i].author.login === username) {
+                  // console.log('oh well');
+                    filteredData.push(result.data[i])
+                  }
                 }
+                // Commit.checkDuplicateCommits(filteredData)
                 // result.data.filter(commit => commit.author.login === username)
                 // console.log(filteredData);
                 return filteredData.map(commit => {
