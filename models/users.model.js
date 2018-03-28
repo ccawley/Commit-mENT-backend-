@@ -13,7 +13,11 @@ class User {
   static pullProfile({token}) {
     return axios.get(`https://api.github.com/user`, {headers: { Authorization: `token ${token}` } })
       .then(result => {
-        return {user_name: result.data.login, avatar_image: result.data.avatar_url}
+        return {
+          full_name: result.data.name,
+          user_name: result.data.login,
+          avatar_image: result.data.avatar_url
+        }
       })
       .catch(err => console.log(err, "YOU'VE GOT ERR, BRO!!!!"))
   }
