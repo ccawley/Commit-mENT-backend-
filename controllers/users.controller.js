@@ -6,7 +6,6 @@ class UsersController {
   static index (req, res, next) {
     User.index()
       .then(users => {
-        console.log(users)
         return res.json({ users })
       })
       .catch(err => {
@@ -16,11 +15,13 @@ class UsersController {
 
   static getUser (req, res, next) {
     User.pullProfile(req.body)
-      .then(({user_name, avatar_image}) => {
+      .then(({full_name, user_name, avatar_image}) => {
         User.getUser(user_name)
           .then(result => {
-            if (result) { res.status(200).json(result)
-            } else {User.createUser({user_name, avatar_image})
+            if (result) {
+              res.status(200).json(result)
+            } else {
+              User.createUser({full_name ,user_name, avatar_image})
               .then(result => res.status(200).json(result))
             }
           })
