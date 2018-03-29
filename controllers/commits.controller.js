@@ -5,6 +5,7 @@ class CommitsController {
   constructor() {}
 
   static index (req, res, next) {
+    let {limit} = req.query
     Commit.index()
       .then(commits => {
         return res.status(200).send(commits)
