@@ -28,7 +28,7 @@ class Like {
             .where('commits.id', '=', id)
             .innerJoin('users', 'commits.user_id', 'user_id')
             .first()
-            .select('user_id', 'message', 'createdAt', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
+            .select('user_id', 'message', 'created_on', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
         })
         return Promise.all(ids)
       })
