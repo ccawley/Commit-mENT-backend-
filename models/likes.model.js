@@ -23,7 +23,7 @@ class Like {
       .orderBy('count', 'desc')
       .groupBy('commit_id')
       .then(array => {
-        let ids = array.map(commit => {
+        let ids = array.slice(0,5).map(commit => {
           let id = parseInt(commit.commit_id)
           return knex('commits')
             .where( {id} )
