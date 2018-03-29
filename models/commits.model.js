@@ -8,26 +8,24 @@ class Commit {
     // should return all commits from every user!
     return knex('users')
       .then(users => {
-        let bfp = users.map(user => {
           // return knex.raw(`SELECT full_name, user_name, avatar_image, commits.id ,created_on, message FROM users, commits WHERE user_id=users.id AND users.id=${user.id}`)
           // .then(result => result.rows)
           return knex('users')
-            .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message')
+            .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
             .innerJoin('commits', 'commits.user_id', 'users.id')
-            .where('users.id', user.id)
+            // .where('users.id', user.id)
             .orderBy('commits.created_on', 'desc')
             // .andWhere('users.id', user.id)
-            // .then(result => console.log(result))
-            // .catch(console.error)
-        })
-        return Promise.all(bfp)
-          .then(result => {
-            let flattened = []
-            result.forEach(user => {
-              user.forEach(commit => flattened.push(commit))
-            })
-            return flattened
-          })
+            .then(result => result)
+            .catch(console.error)
+        // return Promise.all(bfp)
+        //   .then(result => {
+        //     let flattened = []
+        //     result.forEach(user => {
+        //       user.forEach(commit => flattened.push(commit))
+        //     })
+        //     return flattened
+        //   })
       })
 
   }
