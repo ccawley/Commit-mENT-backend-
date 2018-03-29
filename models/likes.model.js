@@ -23,7 +23,10 @@ class Like {
         let ids = array.slice(0,5).map(commit => {
           let id = parseInt(commit.commit_id)
           return knex('commits')
-            .where({ id })
+            .where('commits.id', '=', id)
+            .innerJoin('users', 'commits.user_id', 'user_id')
+            .first()
+            .select('user_id', 'message', 'createdAt', 'sha', 'user_name', 'full_name', 'avatar_image')
         })
         return Promise.all(ids)
       })
