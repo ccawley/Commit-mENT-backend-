@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.foreign('user_id').references('users.id').onDelete('CASCADE')
     table.string('message').notNullable().defaultTo('')
     table.string('created_on').notNullable().defaultTo('')
-    table.string('sha').notNullable().defaultTo('').unique()
+    table.string('sha').notNullable().defaultTo('')
     table.timestamps(true, true)
   })
 };
