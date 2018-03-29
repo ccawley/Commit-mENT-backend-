@@ -1,8 +1,6 @@
 const db = require('../db/knex.js')
 const knex = require('../db/knex')
 
-let likes = [{like: 2}]
-
 class Like {
   constructor () {}
 
@@ -16,7 +14,6 @@ class Like {
   }
 
   static leaders () {
-    let data = []
     return knex('users_likes')
       .count('commit_id')
       .select('commit_id')
@@ -26,7 +23,7 @@ class Like {
         let ids = array.slice(0,5).map(commit => {
           let id = parseInt(commit.commit_id)
           return knex('commits')
-            .where( {id} )
+            .where({ id })
         })
         return Promise.all(ids)
       })
