@@ -16,12 +16,20 @@ class Like {
   }
 
   static leaders () {
+    let data = []
     return knex('users_likes')
-      .join('commits', 'users_likes.commit_id', 'commits.id')
-      // .groupBy('commits.id')
-      //this is not done!!!
-      
-      .count()
+      .count('commit_id')
+      .select('commit_id')
+      .orderBy('count', 'desc')
+      .groupBy('commit_id')
+      .then(array => {
+        let ids = array.map(commit => {
+          let id = parseInt(commit.commit_id)
+          return knex('commits')
+            .where( {id} )
+        })
+        return Promise.all(ids)
+      })
   }
 
   static addOrRemoveLike (newLike) {
