@@ -7,7 +7,7 @@ class CommitsController {
   static index (req, res, next) {
     Commit.index()
       .then(commits => {
-        return res.json({ commits })
+        return res.status(200).send(commits)
       })
       .catch(err => {
         console.log('Error!!', err)
