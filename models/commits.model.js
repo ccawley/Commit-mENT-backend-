@@ -9,7 +9,7 @@ class Commit {
     return knex('users')
       .then(users => {
         let bfp = users.map(user => {
-          return knex.raw(`SELECT full_name, user_name, avatar_image, created_on, message FROM users, commits WHERE user_id=users.id AND users.id=${user.id}`)
+          return knex.raw(`SELECT full_name, user_name, avatar_image, commits.id ,created_on, message FROM users, commits WHERE user_id=users.id AND users.id=${user.id}`)
           .then(result => result.rows)
         //   return knex('users')
         //     .join('commits')
