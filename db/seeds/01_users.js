@@ -4,8 +4,8 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('users').insert([
-        { id: 1, user_name: 'couryp', avatar_image: 'https://avatars.githubusercontent.com/u/28018676?' },
-        { id: 2, user_name: 'ccawley', avatar_image: 'https://avatars.githubusercontent.com/u/25617861?' }
+        { id: 1, user_name: 'couryp', full_name: 'pat McPAttyson', avatar_image: 'https://avatars.githubusercontent.com/u/28018676?' },
+        { id: 2, user_name: 'ccawley', full_name: 'Curtis Cawley', avatar_image: 'https://avatars.githubusercontent.com/u/25617861?' }
       ]);
     }).then(() => {
       return knex.raw(
