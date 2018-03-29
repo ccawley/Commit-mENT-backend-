@@ -4,13 +4,13 @@ const knex = require('../db/knex')
 class Commit {
   constructor() {}
 
-  static index () {
+  static index (limit, offset) {
     // should return all commits from every user!
-    return knex('users')
-      .then(users => {
           // return knex.raw(`SELECT full_name, user_name, avatar_image, commits.id ,created_on, message FROM users, commits WHERE user_id=users.id AND users.id=${user.id}`)
           // .then(result => result.rows)
           return knex('users')
+            .limit(limit)
+            .offset(offset)
             .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
             .innerJoin('commits', 'commits.user_id', 'users.id')
             // .where('users.id', user.id)
@@ -26,8 +26,6 @@ class Commit {
         //     })
         //     return flattened
         //   })
-      })
-
   }
 
   //take in username, get OUR user_id from 'users' table, use that id to get all commits with that ID
