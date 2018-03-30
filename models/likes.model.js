@@ -10,7 +10,8 @@ class Like {
 
   static getOne (id) {
     return knex('users_likes')
-      .where({ id })
+      .where('commit_id', '=', id)
+      .count('commit_id')
   }
 
   static leaders () {
