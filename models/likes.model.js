@@ -10,7 +10,10 @@ class Like {
 
   static getOne (id) {
     return knex('users_likes')
-      .where({ id })
+      .select('commit_id')
+      .where('commit_id', '=', id)
+      .count('commit_id')
+      .groupBy('commit_id')
   }
 
   static leaders () {
@@ -28,7 +31,7 @@ class Like {
             .where('commits.id', '=', id)
             .innerJoin('users', 'commits.user_id', 'user_id')
             .first()
-            .select('user_id', 'message', 'createdAt', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
+            .select('user_id', 'message', 'created_on', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
         })
         return Promise.all(ids)
       })
