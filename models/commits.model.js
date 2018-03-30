@@ -5,28 +5,31 @@ class Commit {
   constructor() {}
 
   static index (limit, offset) {
-    // should return all commits from every user!
-          // return knex.raw(`SELECT full_name, user_name, avatar_image, commits.id ,created_on, message FROM users, commits WHERE user_id=users.id AND users.id=${user.id}`)
-          // .then(result => result.rows)
-          return knex('users')
-            .limit(limit)
-            .offset(offset)
-            .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
-            .innerJoin('commits', 'commits.user_id', 'users.id')
-            // .where('users.id', user.id)
-            .orderBy('commits.created_on', 'desc')
-            // .andWhere('users.id', user.id)
-            .then(result => result)
-            .catch(console.error)
-        // return Promise.all(bfp)
-        //   .then(result => {
-        //     let flattened = []
-        //     result.forEach(user => {
-        //       user.forEach(commit => flattened.push(commit))
-        //     })
-        //     return flattened
-        //   })
+    return knex('commits')
+      .then(commits => {
+        return knex('users_likes')
+        .then(likes => {
+          commits.forEach(commit => {
+            commit.likes = 0
+            likes.forEach(like => {
+              if (commit.id == like.commit_id ) {
+                commit.likes += 1
+              } else {
+                commit.likes += 0
+              }
+            })
+          })
+          return commits
+        })
+      })
+
   }
+
+
+
+
+
+
 
   //take in username, get OUR user_id from 'users' table, use that id to get all commits with that ID
   static userCommits (username) {
