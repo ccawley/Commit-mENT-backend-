@@ -5,18 +5,37 @@ class Commit {
   constructor() {}
 
   static index (limit, offset) {
-    return knex('users')
+    return knex('commits')
       .limit(limit)
       .offset(offset)
       .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
-      .innerJoin('commits', 'commits.user_id', 'users.id')
-      // .where('users.id', user.id)
-      .orderBy('commits.created_on', 'desc')
-      // .andWhere('users.id', user.id)
-      .then(result => result)
-      .catch(console.error)
-
+      .innerJoin('users', 'commits.user_id', 'users.id')
+      .then(commits => {
+        return knex('users_likes')
+        .then(likes => {
+          commits.forEach(commit => {
+            console.log(commit);
+            commit.likes = 0
+            likes.forEach(like => {
+              if (commit.id == like.commit_id ) {
+                console.log('match', commit.id, like.commit_id)
+                commit.likes += 1
+              } else {
+                console.log('no match',commit.id, like.commit_id);
+                commit.likes += 0
+              }
+            })
+          })
+          return commits
+        })
+      })
   }
+
+
+
+
+
+
 
   //take in username, get OUR user_id from 'users' table, use that id to get all commits with that ID
   static userCommits (username) {
