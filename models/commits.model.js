@@ -15,27 +15,33 @@ class Commit {
           //   // .andWhere('users.id', user.id)
           //   .then(result => result)
           //   .catch(console.error)
-    return knex('users_likes')
-      .limit(limit)
-      .offset(offset)
-      .count('commit_id')
-      .select('commit_id')
-      .orderBy('count', 'desc')
-      .groupBy('commit_id')
-      .then(array => {
-        let ids = array.map(commit => {
-          let id = parseInt(commit.commit_id)
-          let count = parseInt(commit.count)
-          console.log('meep',array[0]);
           return knex('commits')
-            .where('commits.id', '=', id)
-            .innerJoin('users', 'commits.user_id', 'user_id')
-            .first()
-            .select('user_id', 'message', 'created_on', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
-        })
-        return Promise.all(ids)
-      })
-      }
+                .limit(limit)
+                .offset(offset)
+                // .where('commits.id', '=', id)
+                .innerJoin('users', 'commits.user_id', 'user_id')
+                // .first()
+                .select('user_id', 'message', 'created_on', 'sha', 'user_name', 'full_name', 'avatar_image')
+                .then(array => {
+                  array.forEach(thing=>{
+
+                    console.log(array)
+                  })
+
+                  // let ids = array.map(commit => {
+                  // // let id = parseInt(commit.commit_id)
+                  // // let count = parseInt(commit.count)
+                  // console.log('meep', commit)
+                  // return knex('users_likes')
+                  //   .count('commit_id')
+                  //   .select('commit_id')
+                  //   .orderBy('count', 'desc')
+                  //   .groupBy('commit_id')
+                  // })
+                  // return Promise.all(ids)
+                //   })
+              })
+
 
   }
 
