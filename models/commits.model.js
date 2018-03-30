@@ -6,15 +6,22 @@ class Commit {
 
   static index (limit, offset) {
     return knex('commits')
+      .limit(limit)
+      .offset(offset)
+      .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
+      .innerJoin('users', 'commits.user_id', 'users.id')
       .then(commits => {
         return knex('users_likes')
         .then(likes => {
           commits.forEach(commit => {
+            console.log(commit);
             commit.likes = 0
             likes.forEach(like => {
               if (commit.id == like.commit_id ) {
+                console.log('match', commit.id, like.commit_id)
                 commit.likes += 1
               } else {
+                console.log('no match',commit.id, like.commit_id);
                 commit.likes += 0
               }
             })
