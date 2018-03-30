@@ -5,39 +5,16 @@ class Commit {
   constructor() {}
 
   static index (limit, offset) {
-          // return knex('users')
-          //   .limit(limit)
-          //   .offset(offset)
-          //   .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
-          //   .innerJoin('commits', 'commits.user_id', 'users.id')
-          //   // .where('users.id', user.id)
-          //   .orderBy('commits.created_on', 'desc')
-          //   // .andWhere('users.id', user.id)
-          //   .then(result => result)
-          //   .catch(console.error)
-
-          return knex('users_likes')
-            .limit(limit)
-            .offset(offset)
-            .count('commit_id')
-            .select('commit_id')
-            .orderBy('count', 'desc')
-            .groupBy('commit_id')
-            .then(array => {
-              return array
-              // let ids = array.map(commit => {
-              //   let id = parseInt(commit.commit_id)
-              //   let count = parseInt(commit.count)
-              //   console.log('meep',array[0]);
-              //   return knex('commits')
-              //     .where('commits.id', '=', id)
-              //     .innerJoin('users', 'commits.user_id', 'user_id')
-              //     .select('commits.id', 'message', 'created_on', 'user_name', 'full_name', 'avatar_image', {count})
-              // })
-              // return Promise.all(ids)
-            })
-
-
+    return knex('users')
+      .limit(limit)
+      .offset(offset)
+      .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
+      .innerJoin('commits', 'commits.user_id', 'users.id')
+      // .where('users.id', user.id)
+      .orderBy('commits.created_on', 'desc')
+      // .andWhere('users.id', user.id)
+      .then(result => result)
+      .catch(console.error)
 
   }
 
