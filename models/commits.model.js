@@ -5,27 +5,38 @@ class Commit {
   constructor() {}
 
   static index (limit, offset) {
-    // should return all commits from every user!
-          // return knex.raw(`SELECT full_name, user_name, avatar_image, commits.id ,created_on, message FROM users, commits WHERE user_id=users.id AND users.id=${user.id}`)
-          // .then(result => result.rows)
-          return knex('users')
-            .limit(limit)
-            .offset(offset)
-            .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
-            .innerJoin('commits', 'commits.user_id', 'users.id')
-            // .where('users.id', user.id)
-            .orderBy('commits.created_on', 'desc')
-            // .andWhere('users.id', user.id)
-            .then(result => result)
-            .catch(console.error)
-        // return Promise.all(bfp)
-        //   .then(result => {
-        //     let flattened = []
-        //     result.forEach(user => {
-        //       user.forEach(commit => flattened.push(commit))
-        //     })
-        //     return flattened
-        //   })
+          // return knex('users')
+          //   .limit(limit)
+          //   .offset(offset)
+          //   .select('users.full_name', 'users.user_name', 'users.avatar_image', 'commits.created_on', 'commits.message', 'commits.id')
+          //   .innerJoin('commits', 'commits.user_id', 'users.id')
+          //   // .where('users.id', user.id)
+          //   .orderBy('commits.created_on', 'desc')
+          //   // .andWhere('users.id', user.id)
+          //   .then(result => result)
+          //   .catch(console.error)
+    return knex('users_likes')
+      .limit(limit)
+      .offset(offset)
+      .count('commit_id')
+      .select('commit_id')
+      .orderBy('count', 'desc')
+      .groupBy('commit_id')
+      .then(array => {
+        let ids = array.map(commit => {
+          let id = parseInt(commit.commit_id)
+          let count = parseInt(commit.count)
+          console.log('meep',array[0]);
+          return knex('commits')
+            .where('commits.id', '=', id)
+            .innerJoin('users', 'commits.user_id', 'user_id')
+            .first()
+            .select('user_id', 'message', 'created_on', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
+        })
+        return Promise.all(ids)
+      })
+      }
+
   }
 
   //take in username, get OUR user_id from 'users' table, use that id to get all commits with that ID
