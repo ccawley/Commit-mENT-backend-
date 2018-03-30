@@ -24,16 +24,17 @@ class Commit {
             .orderBy('count', 'desc')
             .groupBy('commit_id')
             .then(array => {
-              let ids = array.map(commit => {
-                let id = parseInt(commit.commit_id)
-                let count = parseInt(commit.count)
-                console.log('meep',array[0]);
-                return knex('commits')
-                  .where('commits.id', '=', id)
-                  .innerJoin('users', 'commits.user_id', 'user_id')
-                  .select('commits.id', 'message', 'created_on', 'user_name', 'full_name', 'avatar_image', {count})
-              })
-              return Promise.all(ids)
+              return array
+              // let ids = array.map(commit => {
+              //   let id = parseInt(commit.commit_id)
+              //   let count = parseInt(commit.count)
+              //   console.log('meep',array[0]);
+              //   return knex('commits')
+              //     .where('commits.id', '=', id)
+              //     .innerJoin('users', 'commits.user_id', 'user_id')
+              //     .select('commits.id', 'message', 'created_on', 'user_name', 'full_name', 'avatar_image', {count})
+              // })
+              // return Promise.all(ids)
             })
 
 
