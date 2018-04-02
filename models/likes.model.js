@@ -23,13 +23,13 @@ class Like {
       .orderBy('count', 'desc')
       .groupBy('commit_id')
       .then(array => {
+        console.log(array);
         let ids = array.slice(0,5).map(commit => {
           let id = parseInt(commit.commit_id)
           let count = parseInt(commit.count)
-          console.log('meep',array[0]);
           return knex('commits')
             .where('commits.id', '=', id)
-            .innerJoin('users', 'commits.user_id', 'user_id')
+            .innerJoin('users', 'commits.user_id', 'users.id')
             .first()
             .select('user_id', 'message', 'created_on', 'sha', 'user_name', 'full_name', 'avatar_image', {count})
         })
